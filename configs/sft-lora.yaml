@@ -1,0 +1,22 @@
+# Template only: fill model and dataset revisions after baseline selection.
+model:
+  id: null
+  revision: null
+  trust_remote_code: false
+data:
+  train_path: data/processed/train.jsonl
+  validation_path: data/processed/validation.jsonl
+  test_path: data/processed/test.jsonl
+  max_seq_length: 1024
+training:
+  method: sft
+  adapter: lora
+  quantization: 4bit
+  learning_rate: 0.0001
+  num_train_epochs: 2
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  seed: 42
+output:
+  directory: outputs/kabyle-sft-lora
+  push_to_hub: false
