@@ -101,7 +101,7 @@ disagreements; resolve them through a second native-speaker review.
 After a benchmark file has been reviewed and frozen, run one model at a time:
 
     python -m pip install -e ".[train,dev]"
-    python scripts/run_benchmark.py --input private/benchmark.jsonl --output private/predictions-qwen3.jsonl --model Qwen/Qwen3-1.7B --split dev
+    python scripts/run_benchmark.py --input private/benchmark.jsonl --output private/predictions-qwen3.jsonl --model Qwen/Qwen3-1.7B --revision IMMUTABLE_40_CHAR_SHA --split dev
 
 Pin the model with --revision and record that SHA in experiment notes. The
 runner validates that every benchmark record is marked reviewed, selects only
