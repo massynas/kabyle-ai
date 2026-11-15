@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Kabyle AI dataset example",
+  "type": "object",
+  "required": ["text_original", "source"],
+  "properties": {
+    "text_original": {"type": "string", "minLength": 1},
+    "translation": {
+      "type": "object",
+      "required": ["text_original", "language"],
+      "properties": {
+        "text_original": {"type": "string"},
+        "language": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["dataset_id", "revision", "row_id", "license"],
+      "properties": {
+        "dataset_id": {"type": "string"},
+        "revision": {"type": "string"},
+        "row_id": {"type": "string"},
+        "license": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "modalities": {"type": "array", "items": {"type": "string"}},
+    "validation_status": {"type": "string"}
+  },
+  "additionalProperties": true
+}
