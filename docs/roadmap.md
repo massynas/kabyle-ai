@@ -2,7 +2,7 @@
 
 ## Phase 0 — Foundation
 - [x] Define scope and repository structure.
-- [ ] Add CI and automated checks.
+- [x] Add CI and automated checks.
 
 ## Phase 1 — Baseline
 - [ ] Create 100–300 native-speaker prompts.
@@ -12,7 +12,8 @@
 
 ## Phase 2 — Legal corpus
 - [ ] Inventory dictionaries, learning resources and parallel texts.
-- [ ] Verify license or permission for every source.
+- [ ] Verify license or permission for every source, including row-level audio/transcript rights.
+- [ ] Audit TutlaytAI Kabyle audio/transcript datasets; quarantine sources with missing license evidence.
 - [ ] Record dialect, register, orthography, provenance and review status.
 - [ ] Build a high-quality seed dataset.
 
@@ -29,3 +30,4 @@
 ## Phase 5 — Later deployment and speech
 - [ ] Estimate hosting costs and consider a private text endpoint.
 - [ ] Evaluate speech recognition and synthesis separately.
+- [ ] Preserve aligned audio/transcript/translation metadata; never mix audio bytes into text-only SFT exports.

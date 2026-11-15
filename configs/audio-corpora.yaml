@@ -1,0 +1,62 @@
+# Source registry only. No dataset files are stored in Git.
+# Pin an immutable Hugging Face commit SHA before any reproducible audit/import.
+sources:
+  - id: TutlaytAI/Kabyle_ASR-Fr_Translation
+    revision: null
+    split: train
+    modalities: [audio, text]
+    languages: [kab, fr]
+    fields:
+      kabyle_text: "Kab Sentence"
+      translation: "Translated Sentence"
+      audio: audio
+      license: null
+    reported_rows: 22337
+    rights_status: blocked_missing_license
+    allowed_for_training: false
+    notes: "Dataset card exposes audio/transcript/translation but no clear license or row-level rights field. Request publisher clarification."
+
+  - id: TutlaytAI/Kabyle_ASR-En_Translation
+    revision: null
+    split: train
+    modalities: [audio, text]
+    languages: [kab, en]
+    fields:
+      kabyle_text: "Kab Sentence"
+      translation: "Translated Sentence"
+      audio: audio
+      license: null
+    reported_rows: 29144
+    rights_status: blocked_missing_license
+    allowed_for_training: false
+    notes: "Dataset card exposes audio/transcript/translation but no clear license or row-level rights field. Request publisher clarification."
+
+  - id: TutlaytAI/kabyle_asr
+    revision: null
+    split: train
+    modalities: [audio, text]
+    languages: [kab]
+    fields:
+      kabyle_text: Text
+      audio: audio
+      license: Licence
+    reported_rows: 32800
+    reported_total_rows: 46877
+    rights_status: row_level_review_required
+    allowed_for_training: false
+    candidate_license_allowlist: ["CC BY 4.0"]
+    excluded_licenses: ["CC BY-NC 4.0"]
+    notes: "Do not enable export until revision, upstream provenance, audio rights and attribution are confirmed."
+
+  - id: Mozilla/Common-Voice-Kabyle-27.0
+    revision: null
+    split: train
+    modalities: [audio, text]
+    languages: [kab]
+    fields:
+      kabyle_text: sentence
+      audio: path
+      license: null
+    rights_status: cc0_with_no_rehosting_constraints
+    allowed_for_training: false
+    notes: "CC0-1.0. Speech milestone only; do not re-host/re-share dataset or attempt speaker identification."
