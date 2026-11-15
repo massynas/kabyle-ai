@@ -23,6 +23,10 @@ The text model can use legally cleared transcript/translation pairs without inge
 
 The two translation datasets show useful examples and audio/text columns, but a missing license declaration is not permission. The raw ASR dataset is especially important because its viewer exposes mixed row-level licensing. Never treat the dataset-level generic `cc` label as overriding a more restrictive row-level license.
 
+## Additional speech source
+
+Mozilla Common Voice Kabyle 27.0 (CC0-1.0) remains a separate speech-stage download because it is distributed through Mozilla Data Collective, not the Hugging Face loader used by the current staging script. Retain its no-rehosting/no-speaker-identification conditions and do not copy its audio into Git.
+
 ## Import rules
 
 1. Pin an immutable Hugging Face revision before every audit or import. Do not use a moving `main` revision for a reproducible training run.
