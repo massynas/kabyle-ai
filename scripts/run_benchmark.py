@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +33,8 @@ def main() -> int:
     parser.add_argument("--split", choices=("dev", "test"), default="dev")
     parser.add_argument("--max-new-tokens", type=int, default=256)
     args = parser.parse_args()
+    if not re.fullmatch(r"[0-9a-fA-F]{40}", args.revision):
+        parser.error("--revision must be an immutable 40-character commit SHA")
     if args.max_new_tokens < 1:
         parser.error("--max-new-tokens must be positive")
 
@@ -96,7 +99,7 @@ def main() -> int:
                 "prompt": record["prompt"],
                 "generated_answer": answer,
                 "model_id": args.model,
-                "requested_revision": args.revision or "default",
+                "requested_revision": args.revision,
                 "resolved_model_path": resolved_revision,
                 "generation": {
                     "max_new_tokens": args.max_new_tokens,
