@@ -13,6 +13,8 @@ def valid_record(**overrides):
         "rights_review": {
             "status": "approved",
             "model_training_allowed": True,
+            "commercial_use_allowed": False,
+            "weights_distribution_allowed": False,
             "evidence_ref": "private/rights/approval-001.pdf",
             "reviewed_at": "2026-11-15",
         },
