@@ -29,6 +29,7 @@ Speech and a full application are postponed. Retrieval may support terminology b
 - [docs/model-candidate-review.md](docs/model-candidate-review.md): initial compact multilingual model comparison.
 - [docs/audio-corpus-plan.md](docs/audio-corpus-plan.md): audio/text source handling.
 - [docs/training-pipeline.md](docs/training-pipeline.md): rights-gated LoRA SFT and explicit training confirmation.
+- [notebooks/colab_first_run.ipynb](notebooks/colab_first_run.ipynb): private Google Colab smoke test, tokenizer probe and optional guarded QLoRA run.
 - [docs/open-source-release-checklist.md](docs/open-source-release-checklist.md): legal, evaluation and packaging gates before publication.
 - [docs/rightsholder-contact-template.md](docs/rightsholder-contact-template.md): bilingual permission request for publishers and rights holders.
 - [docs/rights-register.template.csv](docs/rights-register.template.csv): row-level provenance and release-permission register.
