@@ -6,7 +6,7 @@ class FakeTokenizer:
 
     def encode(self, text, add_special_tokens=False):
         assert add_special_tokens is False
-        return [ord(character) for character in text]
+        return [0 if character == "?" else ord(character) for character in text]
 
     def decode(self, token_ids, skip_special_tokens=False):
         return "".join(chr(token_id) for token_id in token_ids)
@@ -25,5 +25,5 @@ def test_probe_preserves_kabyle_and_tifinagh_unicode():
 
 def test_probe_counts_unknown_tokens():
     tokenizer = FakeTokenizer()
-    result = summarize_text(tokenizer, "A")
-    assert result["unknown_token_count"] == 0
+    result = summarize_text(tokenizer, "?")
+    assert result["unknown_token_count"] == 1
