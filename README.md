@@ -28,5 +28,6 @@ Speech and a full application are postponed. Retrieval may support terminology b
 - [docs/corpus-preview-audit.md](docs/corpus-preview-audit.md): first Hugging Face schema/sample inspection and data-quality flags.
 - [docs/model-candidate-review.md](docs/model-candidate-review.md): initial compact multilingual model comparison.
 - [docs/audio-corpus-plan.md](docs/audio-corpus-plan.md): audio/text source handling.
+- [docs/training-pipeline.md](docs/training-pipeline.md): rights-gated LoRA SFT and explicit training confirmation.
 
 The downloader pins immutable Hugging Face revisions and stores datasets outside Git. Downloading does not approve a source for training or redistribution. Never commit raw corpora, audio, private credentials or unreviewed examples.
