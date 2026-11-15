@@ -57,7 +57,15 @@ def main() -> int:
         trust_remote_code=False,
     )
     model.eval()
-    resolved_revision = model.config._name_or_path
+    resolved_revision = (
+        getattr(model.config, "_commit_hash", None)
+        or tokenizer.init_kwargs.get("_commit_hash")
+        or args.revision
+        or "unresolved"
+    )
+    pad_token_id = tokenizer.pad_token_id
+    if pad_token_id is None:
+        pad_token_id = tokenizer.eos_token_id
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
     with args.output.open("w", encoding="utf-8") as output:
@@ -77,7 +85,7 @@ def main() -> int:
                     max_new_tokens=args.max_new_tokens,
                     do_sample=False,
                     num_beams=1,
-                    pad_token_id=tokenizer.eos_token_id,
+                    pad_token_id=pad_token_id,
                 )
             answer = tokenizer.decode(
                 generated[0][input_length:], skip_special_tokens=True
