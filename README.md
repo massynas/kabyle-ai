@@ -18,7 +18,7 @@ Status: project foundation and corpus-ingestion tooling are under review. No mod
 4. Evaluate candidate models and tokenizer handling.
 5. Run LoRA/QLoRA supervised fine-tuning and compare with the base model.
 
-Qwen2.5-1.5B-Instruct is a candidate only. License, tokenizer behaviour on Kabyle characters, language coverage and benchmark performance must be checked before selection.
+The initial base-model review currently favours probing [Qwen3-1.7B](https://huggingface.co/Qwen/Qwen3-1.7B), with [Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) retained as a control. This is not a final selection: Kabyle tokenizer behaviour and native-speaker benchmark results must decide.
 
 Speech and a full application are postponed. Retrieval may support terminology but cannot replace language adaptation. Public accessibility does not imply permission to train on books, articles or translations; see [docs/data-policy.md](docs/data-policy.md).
 
@@ -26,6 +26,7 @@ Speech and a full application are postponed. Retrieval may support terminology b
 - [docs/resource-inventory.md](docs/resource-inventory.md): source catalogue and initial rights assessment.
 - [docs/corpus-staging-policy.md](docs/corpus-staging-policy.md): private staging and provenance rules.
 - [docs/corpus-preview-audit.md](docs/corpus-preview-audit.md): first Hugging Face schema/sample inspection and data-quality flags.
+- [docs/model-candidate-review.md](docs/model-candidate-review.md): initial compact multilingual model comparison.
 - [docs/audio-corpus-plan.md](docs/audio-corpus-plan.md): audio/text source handling.
 
 The downloader pins immutable Hugging Face revisions and stores datasets outside Git. Downloading does not approve a source for training or redistribution. Never commit raw corpora, audio, private credentials or unreviewed examples.
