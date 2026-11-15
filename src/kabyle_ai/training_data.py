@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,8 @@ def validate_training_records(records: list[dict[str, Any]]) -> list[str]:
     """Reject records without explicit, auditable model-training permission."""
     errors: list[str] = []
     seen_ids: set[str] = set()
+    if not records:
+        return ["training file contains no records"]
     for index, record in enumerate(records, start=1):
         prefix = f"record {index}"
         if not isinstance(record, dict):
@@ -64,6 +67,9 @@ def validate_training_records(records: list[dict[str, Any]]) -> list[str]:
                 value = source.get(field)
                 if not isinstance(value, str) or not value.strip():
                     errors.append(f"{prefix}: source.{field} is required")
+            revision = source.get("revision")
+            if isinstance(revision, str) and not re.fullmatch(r"[0-9a-fA-F]{40}", revision):
+                errors.append(f"{prefix}: source.revision must be an immutable 40-character SHA")
 
         messages = record["messages"]
         if not isinstance(messages, list) or len(messages) < 2:
@@ -75,7 +81,7 @@ def validate_training_records(records: list[dict[str, Any]]) -> list[str]:
                 errors.append(f"{prefix}: message {message_index} must be an object")
                 continue
             role, content = message.get("role"), message.get("content")
-            if role not in {"system", "user", "assistant"}:
+            if not isinstance(role, str) or role not in {"system", "user", "assistant"}:
                 errors.append(f"{prefix}: message {message_index} has an invalid role")
             else:
                 roles.append(role)
