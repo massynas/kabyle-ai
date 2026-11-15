@@ -151,6 +151,12 @@ def main() -> int:
         "rights_evidence_refs": sorted({
             row["rights_review"]["evidence_ref"] for row in records
         }),
+        "commercial_use_allowed_for_all_rows": all(
+            row["rights_review"]["commercial_use_allowed"] for row in records
+        ),
+        "weights_distribution_allowed_for_all_rows": all(
+            row["rights_review"]["weights_distribution_allowed"] for row in records
+        ),
         "output_is_adapter": True,
         "hyperparameters": {
             "epochs": args.epochs,
