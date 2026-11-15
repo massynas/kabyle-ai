@@ -74,3 +74,9 @@ Before downloading any source into the training pipeline:
 ## Source notes
 
 All quantities and license labels above are publisher-reported, not independently re-counted by this repository. A dataset card is evidence to investigate, not a substitute for legal review of upstream works. Where the license is ambiguous or share-alike, do not combine the data into a permissively licensed release by default.
+
+## Kabyle–Arabic parallel data lead
+
+A new candidate, [ParaKab](https://doi.org/10.5281/zenodo.18875317), is catalogued as an approximately one-million-pair multilingual corpus with Kabyle–Arabic, Kabyle–French and Kabyle–English subsets. Its catalogue describes source-level provenance and licenses alongside a general CC BY 4.0 label. Because individual pairs may retain their original source licenses or rights holders, the corpus is **quarantined pending row-level rights review**; the general license does not automatically clear every row. See [docs/arabic-parallel-corpus-review.md](arabic-parallel-corpus-review.md). No ParaKab archive has been downloaded.
+
+Other new discovery leads are recorded separately: Timucuha (CC BY-NC 4.0, Kabyle/French/English), NLLB English–Kabyle (CC BY-NC 4.0), and a gated Tatoeba English–Kabyle set (CC BY 2.0, sentence-level terms to inspect). None supplies a cleared Kabyle–Arabic training set. A generic Tamazight speech-to-Arabic resource was excluded because Kabyle variety membership was not established.
