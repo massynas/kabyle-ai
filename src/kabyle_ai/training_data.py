@@ -51,6 +51,9 @@ def validate_training_records(records: list[dict[str, Any]]) -> list[str]:
                 errors.append(f"{prefix}: rights_review.status must be approved")
             if review.get("model_training_allowed") is not True:
                 errors.append(f"{prefix}: model_training_allowed must be true")
+            for field in ("commercial_use_allowed", "weights_distribution_allowed"):
+                if not isinstance(review.get(field), bool):
+                    errors.append(f"{prefix}: rights_review.{field} must be explicitly true or false")
             if not isinstance(review.get("evidence_ref"), str) or not review["evidence_ref"].strip():
                 errors.append(f"{prefix}: rights_review.evidence_ref is required")
             reviewed_at = review.get("reviewed_at")
