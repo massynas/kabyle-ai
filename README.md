@@ -29,6 +29,7 @@ Speech and a full application are postponed. Retrieval may support terminology b
 - [docs/model-candidate-review.md](docs/model-candidate-review.md): initial compact multilingual model comparison.
 - [docs/native-benchmark.md](docs/native-benchmark.md): native-speaker benchmark design, leakage prevention and scoring.
 - [docs/tokenizer-probe.md](docs/tokenizer-probe.md): reproducible tokenizer-only Unicode comparison.
+- [docs/arabic-parallel-corpus-review.md](docs/arabic-parallel-corpus-review.md): Kabyle–Arabic parallel-data discovery and rights review.
 - [docs/audio-corpus-plan.md](docs/audio-corpus-plan.md): audio/text source handling.
 
 The downloader pins immutable Hugging Face revisions and stores datasets outside Git. Downloading does not approve a source for training or redistribution. Never commit raw corpora, audio, private credentials or unreviewed examples.
