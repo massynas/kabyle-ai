@@ -21,6 +21,11 @@ def main() -> int:
     parser.add_argument("--learning-rate", type=float, default=2e-4)
     parser.add_argument("--max-length", type=int, default=1024)
     parser.add_argument(
+        "--load-in-4bit",
+        action="store_true",
+        help="use QLoRA with NF4 quantization (requires CUDA and bitsandbytes)",
+    )
+    parser.add_argument(
         "--confirm-training",
         action="store_true",
         help="required to download model weights and start training; without it only validate",
@@ -52,10 +57,11 @@ def main() -> int:
 
     import torch
     from datasets import Dataset
-    from peft import LoraConfig, get_peft_model
+    from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
     from transformers import (
         AutoModelForCausalLM,
         AutoTokenizer,
+        BitsAndBytesConfig,
         DataCollatorForLanguageModeling,
         Trainer,
         TrainingArguments,
@@ -67,12 +73,33 @@ def main() -> int:
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model,
-        revision=args.revision,
-        torch_dtype="auto",
-        trust_remote_code=False,
-    )
+    use_cuda = torch.cuda.is_available()
+    use_bf16 = use_cuda and torch.cuda.is_bf16_supported()
+    if args.load_in_4bit:
+        if not use_cuda:
+            parser.error("--load-in-4bit requires a CUDA GPU")
+        compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
+        quantization_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=compute_dtype,
+            bnb_4bit_use_double_quant=True,
+        )
+        model = AutoModelForCausalLM.from_pretrained(
+            args.model,
+            revision=args.revision,
+            quantization_config=quantization_config,
+            device_map="auto",
+            trust_remote_code=False,
+        )
+        model = prepare_model_for_kbit_training(model)
+    else:
+        model = AutoModelForCausalLM.from_pretrained(
+            args.model,
+            revision=args.revision,
+            torch_dtype="auto",
+            trust_remote_code=False,
+        )
     lora_config = LoraConfig(
         r=16,
         lora_alpha=32,
@@ -111,8 +138,6 @@ def main() -> int:
         remove_columns=dataset.column_names,
         desc="Tokenizing approved Kabyle conversations",
     )
-    use_cuda = torch.cuda.is_available()
-    use_bf16 = use_cuda and torch.cuda.is_bf16_supported()
     training_args = TrainingArguments(
         output_dir=str(args.output_dir),
         num_train_epochs=args.epochs,
