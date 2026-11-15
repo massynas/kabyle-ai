@@ -17,3 +17,8 @@ data/raw/
 data/interim/
 data/processed/
 staging/
+private/
+artifacts/
+results/
+predictions*.jsonl
+benchmark*.jsonl
