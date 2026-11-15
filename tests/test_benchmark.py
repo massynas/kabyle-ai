@@ -60,3 +60,12 @@ def test_jsonl_loader_preserves_unicode_verbatim(tmp_path):
 def test_malformed_enum_types_are_reported_without_crashing():
     errors = validate_records([valid_record(category=["not", "a", "category"])])
     assert any("category must be one of" in error for error in errors)
+
+
+def test_validate_file_reports_invalid_utf8(tmp_path):
+    from kabyle_ai.benchmark import validate_file
+
+    path = tmp_path / "invalid.jsonl"
+    path.write_bytes(b"\\xff")
+    errors = validate_file(path)
+    assert errors and "utf-8" in errors[0].lower()
