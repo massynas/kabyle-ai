@@ -16,6 +16,7 @@
 ## Phase 2 — Legal corpus
 - [ ] Inventory dictionaries, learning resources and parallel texts.
 - [ ] Verify license or permission for every source, including row-level audio/transcript rights.
+- [ ] Audit ParaKab Kabyle–Arabic rows and source-level rights before any training import.
 - [ ] Audit TutlaytAI Kabyle audio/transcript datasets; quarantine sources with missing license evidence.
 - [ ] Record dialect, register, orthography, provenance and review status.
 - [ ] Build a high-quality seed dataset.
