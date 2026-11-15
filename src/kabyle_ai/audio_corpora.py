@@ -58,11 +58,14 @@ def build_text_record(
             "row_id": str(row_id),
             "license": str(license_value).strip(),
         },
-        "modalities": ["text", "audio_source"],
+        "modalities": ["text"],
+        "source_modalities": ["audio", "text"],
         "validation_status": "unreviewed",
     }
 
     if translation_field is not None:
+        if not translation_language:
+            raise ValueError("translation_language is required when translation_field is set")
         translation = row.get(translation_field)
         if isinstance(translation, str) and translation.strip():
             record["translation"] = {
