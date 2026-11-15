@@ -48,7 +48,8 @@ One UTF-8 JSON object per line. Example:
     {"id":"kab-dev-0001","split":"dev","category":"conversation","register":"everyday","prompt":"...","reference_answer":"...","review_status":"draft"}
 
 Allowed categories: conversation, comprehension, idiom, translation_kab_fr,
-translation_fr_kab, orthography, literary_register.
+translation_fr_kab, translation_kab_ar, translation_ar_kab, orthography,
+literary_register.
 
 Do not commit the real held-out test set to a public repository. During private
 development it may be stored in an access-controlled private location. The
