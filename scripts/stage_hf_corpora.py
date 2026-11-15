@@ -76,7 +76,7 @@ def load_sifal_tsv(path: str | Path):
     dataset = load_dataset(
         "csv",
         data_files={"train": str(path)},
-        delimiter="\\t",
+        delimiter="\t",
         column_names=SIFAL_COLUMNS,
         header=None,
         keep_default_na=False,
