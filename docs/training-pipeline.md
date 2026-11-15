@@ -11,7 +11,8 @@ Each JSONL row must contain:
 - a messages array containing user and assistant turns;
 - training_approved set to true;
 - a rights_review object with status approved, model_training_allowed true,
-  an evidence reference and ISO review date;
+  explicit true/false values for commercial_use_allowed and
+  weights_distribution_allowed, an evidence reference and ISO review date;
 - source metadata: dataset ID, immutable source revision, row ID, exact license,
   source URL and attribution.
 
@@ -56,3 +57,8 @@ not automatically approved for redistribution.
 - Keep private source corpora, training JSONL and model outputs out of Git.
 - Compare the adapter against the untouched base model on the frozen native
   benchmark before deciding whether it improves Kabyle.
+
+The run manifest records whether every training row also permits commercial use
+and distribution of model weights. A private training run can be allowed while
+open-source weight release remains blocked; do not publish an adapter unless the
+rights review explicitly clears that separate use.
