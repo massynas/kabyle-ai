@@ -74,3 +74,22 @@ def test_messages_must_end_with_assistant():
     record["messages"][-1] = {"role": "user", "content": "Follow-up"}
     errors = validate_training_records([record])
     assert any("end with assistant" in error for error in errors)
+
+
+def test_empty_training_file_is_rejected():
+    errors = validate_training_records([])
+    assert any("contains no records" in error for error in errors)
+
+
+def test_malformed_message_role_is_reported_without_crashing():
+    record = valid_record()
+    record["messages"][0]["role"] = ["user"]
+    errors = validate_training_records([record])
+    assert any("invalid role" in error for error in errors)
+
+
+def test_source_revision_must_be_immutable_sha():
+    record = valid_record()
+    record["source"]["revision"] = "main"
+    errors = validate_training_records([record])
+    assert any("immutable 40-character SHA" in error for error in errors)
