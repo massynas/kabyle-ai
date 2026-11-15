@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from huggingface_hub import HfApi
-from datasets import load_dataset
+from datasets import DatasetDict, load_dataset
 
 
 SOURCES = {
@@ -102,10 +102,10 @@ def main() -> None:
             )
 
             if args.max_samples:
-                dataset = {
+                dataset = DatasetDict({
                     split: rows.select(range(min(args.max_samples, len(rows))))
                     for split, rows in dataset.items()
-                }
+                })
 
             config_destination = destination / (config_name or "default")
             config_destination.mkdir(parents=True, exist_ok=True)
