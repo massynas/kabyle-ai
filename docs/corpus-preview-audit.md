@@ -21,11 +21,11 @@
 - A dataset card or Hub preview does not prove that every underlying recording, translation or source work is cleared for training or redistribution.
 - No corpus was downloaded to durable storage by this preview operation.
 - No source text or audio has been copied into this repository.
-- The Sifal staging parser has been corrected in code, but its test has not yet completed in GitHub Actions.
+- The Sifal staging parser has been corrected; the PR #2 GitHub Actions test suite completed successfully, including the first-record and string-ID regression test.
 
 ## Next validation tasks
 
-1. Run the new Sifal TSV parser test in CI and verify the complete staged split count against the raw source.
+1. In a compute environment, stage the complete Sifal split and verify its count against the raw source; the parser regression test is green, but the full dataset has not been downloaded.
 2. Sample KabLex across source/domain and gloss availability, not just its first rows.
 3. Measure exact license counts across the full `TutlaytAI/kabyle_asr` split in a compute environment.
 4. Request written provenance and license clarification for both TutlaytAI translated audio datasets.
