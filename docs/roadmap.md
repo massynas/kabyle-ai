@@ -2,7 +2,7 @@
 
 ## Phase 0 — Foundation
 - [x] Define scope and repository structure.
-- [ ] Add CI and automated checks.
+- [x] Add CI and automated checks.
 
 ## Phase 1 — Baseline
 - [ ] Create 100–300 native-speaker prompts.
