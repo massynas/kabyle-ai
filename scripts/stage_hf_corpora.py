@@ -73,13 +73,17 @@ def slug(dataset_id: str) -> str:
 
 def load_sifal_tsv(path: str | Path):
     """Load the raw Tatoeba TSV without treating its first sentence as a header."""
-    return load_dataset(
+    dataset = load_dataset(
         "csv",
         data_files={"train": str(path)},
-        delimiter="\t",
+        delimiter="\\t",
         column_names=SIFAL_COLUMNS,
         header=None,
         keep_default_na=False,
+    )
+    # Keep Tatoeba IDs as strings to preserve exact identifiers and leading zeros.
+    return dataset.cast_column("kabyle_sentence_id", Value("string")).cast_column(
+        "french_sentence_id", Value("string")
     )
 
 
