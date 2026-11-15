@@ -40,6 +40,8 @@ def test_text_record_preserves_original_unicode_and_translation():
     assert record["text_original"] == original
     assert record["translation"]["text_original"] == "Je ne sais pas."
     assert "audio" not in record
+    assert record["modalities"] == ["text"]
+    assert record["source_modalities"] == ["audio", "text"]
     assert record["source"]["row_id"] == "7"
 
 
