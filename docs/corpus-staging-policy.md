@@ -27,6 +27,8 @@ The project owner has asked to collect and inspect the identified Kabyle resourc
 - `agbalu/KabBench` (evaluation only)
 - `Sifal/Kabyle-French`
 
+**Separate source not yet automated:** Mozilla Common Voice Kabyle 27.0 is hosted through Mozilla Data Collective rather than the Hugging Face dataset list used by this script. It remains on the speech collection checklist; its CC0 terms and no-rehosting/no-speaker-identification conditions must be retained. It is large, so it should be staged through its official download route in a separate step.
+
 The downloader stages the full available splits by default. Use `--max-samples` only for a smoke test. It resolves and records an immutable revision before loading. Audio bytes remain in local staging, never in Git.
 
 ## Run
