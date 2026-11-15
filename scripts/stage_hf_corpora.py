@@ -114,6 +114,8 @@ def main() -> None:
     parser.add_argument("--max-samples", type=int, default=0,
                         help="Optional small smoke-test limit; 0 stages the full dataset.")
     args = parser.parse_args()
+    if args.max_samples < 0:
+        parser.error("--max-samples must be zero (full dataset) or a positive integer")
 
     selected = args.datasets or list(SOURCES)
     unknown = sorted(set(selected) - set(SOURCES))
