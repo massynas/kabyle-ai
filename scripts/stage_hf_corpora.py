@@ -14,9 +14,12 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
-from huggingface_hub import HfApi
 from datasets import DatasetDict, load_dataset
+from huggingface_hub import HfApi, hf_hub_download
 
+
+SIFAL_TSV_NAME = "Sentence pairs in Kabyle-French - 2023-07-18.tsv"
+SIFAL_COLUMNS = ["kabyle_sentence_id", "kabyle_text", "french_sentence_id", "french_text"]
 
 SOURCES = {
     "TutlaytAI/Kabyle_ASR-Fr_Translation": {
@@ -59,12 +62,44 @@ SOURCES = {
         "role": "quarantine_research",
         "rights": "generic_CC_label_sentence_level_rights_to_confirm",
         "notes": "Tatoeba-derived; preserve source IDs and investigate per-sentence licensing and attribution.",
+        "format": "tab_separated_no_header",
     },
 }
 
 
 def slug(dataset_id: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "__", dataset_id)
+
+
+def load_sifal_tsv(path: str | Path):
+    """Load the raw Tatoeba TSV without treating its first sentence as a header."""
+    return load_dataset(
+        "csv",
+        data_files={"train": str(path)},
+        delimiter="\t",
+        column_names=SIFAL_COLUMNS,
+        header=None,
+        keep_default_na=False,
+    )
+
+
+def load_source_dataset(dataset_id: str, revision: str, config_name: str | None):
+    """Load one source, applying source-specific parsing where required."""
+    if dataset_id == "Sifal/Kabyle-French":
+        path = hf_hub_download(
+            repo_id=dataset_id,
+            filename=SIFAL_TSV_NAME,
+            repo_type="dataset",
+            revision=revision,
+        )
+        return load_sifal_tsv(path)
+
+    return load_dataset(
+        dataset_id,
+        name=config_name,
+        revision=revision,
+        streaming=False,
+    )
 
 
 def main() -> None:
@@ -94,12 +129,7 @@ def main() -> None:
         destination.mkdir(parents=True, exist_ok=True)
         config_names = SOURCES[dataset_id].get("configs", [None])
         for config_name in config_names:
-            dataset = load_dataset(
-                dataset_id,
-                name=config_name,
-                revision=revision,
-                streaming=False,
-            )
+            dataset = load_source_dataset(dataset_id, revision, config_name)
 
             if args.max_samples:
                 dataset = DatasetDict({
@@ -118,6 +148,11 @@ def main() -> None:
                 "role": SOURCES[dataset_id]["role"],
                 "rights_status": SOURCES[dataset_id]["rights"],
                 "notes": SOURCES[dataset_id]["notes"],
+                "parser_overrides": {
+                    "format": SOURCES[dataset_id].get("format"),
+                    "columns": SIFAL_COLUMNS if dataset_id == "Sifal/Kabyle-French" else None,
+                    "header": None if dataset_id == "Sifal/Kabyle-French" else "dataset_default",
+                },
                 "splits": {split: len(rows) for split, rows in dataset.items()},
                 "features": {split: str(rows.features) for split, rows in dataset.items()},
                 "max_samples": args.max_samples or None,
