@@ -5,10 +5,13 @@
 - [x] Add CI and automated checks.
 
 ## Phase 1 — Baseline
-- [ ] Create 100–300 native-speaker prompts.
+- [x] Add native benchmark JSONL validation, unique-ID checks and a reviewed-only freeze gate.
+- [x] Define the native-speaker scoring rubric, register labels and evaluation leakage rules.
+- [x] Add a tokenizer-only Unicode probe for Qwen3-1.7B and Qwen2.5-1.5B-Instruct.
+- [ ] Create 100–300 native-speaker prompts and reference answers.
 - [ ] Cover conversation, comprehension, idioms and translation in both directions.
-- [ ] Freeze a held-out test set and scoring rubric.
-- [ ] Evaluate candidate models and tokenizer handling.
+- [ ] Freeze a held-out test set and scoring rubric after native review.
+- [ ] Run tokenizer probes and compare candidate models on the frozen benchmark.
 
 ## Phase 2 — Legal corpus
 - [ ] Inventory dictionaries, learning resources and parallel texts.
