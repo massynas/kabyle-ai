@@ -46,14 +46,18 @@ def validate_records(
         else:
             seen_ids.add(record_id)
 
-        if record["split"] not in ALLOWED_SPLITS:
-            errors.append(f"{prefix}: split must be one of {sorted(ALLOWED_SPLITS)}")
-        if record["category"] not in ALLOWED_CATEGORIES:
-            errors.append(f"{prefix}: unsupported category {record['category']!r}")
-        if record["register"] not in ALLOWED_REGISTERS:
-            errors.append(f"{prefix}: unsupported register {record['register']!r}")
-        if record["review_status"] not in ALLOWED_REVIEW_STATUSES:
-            errors.append(f"{prefix}: review_status must be draft or reviewed")
+        enum_fields = (
+            ("split", ALLOWED_SPLITS),
+            ("category", ALLOWED_CATEGORIES),
+            ("register", ALLOWED_REGISTERS),
+            ("review_status", ALLOWED_REVIEW_STATUSES),
+        )
+        for field, allowed_values in enum_fields:
+            value = record[field]
+            if not isinstance(value, str) or value not in allowed_values:
+                errors.append(
+                    f"{prefix}: {field} must be one of {sorted(allowed_values)}"
+                )
         for field in ("prompt", "reference_answer"):
             value = record[field]
             if not isinstance(value, str) or not value.strip():
