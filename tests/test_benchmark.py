@@ -55,3 +55,8 @@ def test_jsonl_loader_preserves_unicode_verbatim(tmp_path):
     path = tmp_path / "benchmark.jsonl"
     path.write_text(json.dumps(record, ensure_ascii=False) + "\n", encoding="utf-8")
     assert load_jsonl(path)[0]["prompt"] == record["prompt"]
+
+
+def test_malformed_enum_types_are_reported_without_crashing():
+    errors = validate_records([valid_record(category=["not", "a", "category"])])
+    assert any("category must be one of" in error for error in errors)
