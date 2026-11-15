@@ -66,6 +66,6 @@ def test_validate_file_reports_invalid_utf8(tmp_path):
     from kabyle_ai.benchmark import validate_file
 
     path = tmp_path / "invalid.jsonl"
-    path.write_bytes(b"\\xff")
+    path.write_bytes(bytes([255]))
     errors = validate_file(path)
     assert errors and "utf-8" in errors[0].lower()
