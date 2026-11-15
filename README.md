@@ -27,6 +27,8 @@ Speech and a full application are postponed. Retrieval may support terminology b
 - [docs/corpus-staging-policy.md](docs/corpus-staging-policy.md): private staging and provenance rules.
 - [docs/corpus-preview-audit.md](docs/corpus-preview-audit.md): first Hugging Face schema/sample inspection and data-quality flags.
 - [docs/model-candidate-review.md](docs/model-candidate-review.md): initial compact multilingual model comparison.
+- [docs/native-benchmark.md](docs/native-benchmark.md): native-speaker benchmark design, leakage prevention and scoring.
+- [docs/tokenizer-probe.md](docs/tokenizer-probe.md): reproducible tokenizer-only Unicode comparison.
 - [docs/audio-corpus-plan.md](docs/audio-corpus-plan.md): audio/text source handling.
 
 The downloader pins immutable Hugging Face revisions and stores datasets outside Git. Downloading does not approve a source for training or redistribution. Never commit raw corpora, audio, private credentials or unreviewed examples.
