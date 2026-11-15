@@ -69,3 +69,9 @@ def test_validate_file_reports_invalid_utf8(tmp_path):
     path.write_bytes(bytes([255]))
     errors = validate_file(path)
     assert errors and "utf-8" in errors[0].lower()
+
+
+def test_kabyle_arabic_translation_categories_are_supported():
+    kabyle_to_arabic = valid_record(category="translation_kab_ar")
+    arabic_to_kabyle = valid_record(category="translation_ar_kab")
+    assert validate_records([kabyle_to_arabic, arabic_to_kabyle]) == []
