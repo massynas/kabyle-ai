@@ -35,6 +35,7 @@ SOURCES = {
         "notes": "Keep row-level Licence field; separate CC BY from CC BY-NC; verify audio/source rights.",
     },
     "agbalu/KabLex": {
+        "configs": ["lexicon", "pronunciations"],
         "role": "lexicon_and_pronunciation",
         "rights": "CC_BY_4.0_dataset_with_row_level_upstream_licences",
         "notes": "Keep lexicon and pronunciation configs separate; retain row-level licence and upstream citations.",
@@ -91,40 +92,42 @@ def main() -> None:
 
         destination = args.output / slug(dataset_id) / revision
         destination.mkdir(parents=True, exist_ok=True)
-        dataset = load_dataset(
-            dataset_id,
-            revision=revision,
-            streaming=False,
-        )
+        config_names = SOURCES[dataset_id].get("configs", [None])
+        for config_name in config_names:
+            dataset = load_dataset(
+                dataset_id,
+                name=config_name,
+                revision=revision,
+                streaming=False,
+            )
 
-        if args.max_samples:
-            dataset = {
-                split: rows.select(range(min(args.max_samples, len(rows))))
-                for split, rows in dataset.items()
+            if args.max_samples:
+                dataset = {
+                    split: rows.select(range(min(args.max_samples, len(rows))))
+                    for split, rows in dataset.items()
+                }
+
+            config_destination = destination / (config_name or "default")
+            config_destination.mkdir(parents=True, exist_ok=True)
+            dataset.save_to_disk(str(config_destination / "dataset"))
+            manifest = {
+                "dataset_id": dataset_id,
+                "config": config_name or "default",
+                "revision": revision,
+                "retrieved_at_utc": datetime.now(timezone.utc).isoformat(),
+                "role": SOURCES[dataset_id]["role"],
+                "rights_status": SOURCES[dataset_id]["rights"],
+                "notes": SOURCES[dataset_id]["notes"],
+                "splits": {split: len(rows) for split, rows in dataset.items()},
+                "features": {split: str(rows.features) for split, rows in dataset.items()},
+                "max_samples": args.max_samples or None,
+                "training_approved": False,
             }
-
-        dataset.save_to_disk(str(destination / "dataset"))
-        manifest = {
-            "dataset_id": dataset_id,
-            "revision": revision,
-            "retrieved_at_utc": datetime.now(timezone.utc).isoformat(),
-            "role": SOURCES[dataset_id]["role"],
-            "rights_status": SOURCES[dataset_id]["rights"],
-            "notes": SOURCES[dataset_id]["notes"],
-            "splits": {
-                split: len(rows) for split, rows in dataset.items()
-            },
-            "features": {
-                split: str(rows.features) for split, rows in dataset.items()
-            },
-            "max_samples": args.max_samples or None,
-            "training_approved": False,
-        }
-        (destination / "manifest.json").write_text(
-            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-        print(f"staged {dataset_id}@{revision} -> {destination}")
+            (config_destination / "manifest.json").write_text(
+                json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n",
+                encoding="utf-8",
+            )
+            print(f"staged {dataset_id}[{config_name or 'default'}]@{revision} -> {config_destination}")
 
 
 if __name__ == "__main__":
