@@ -8,7 +8,8 @@ from typing import Any
 ALLOWED_SPLITS = frozenset({"dev", "test"})
 ALLOWED_CATEGORIES = frozenset({
     "conversation", "comprehension", "idiom", "translation_kab_fr",
-    "translation_fr_kab", "orthography", "literary_register",
+    "translation_fr_kab", "translation_kab_ar", "translation_ar_kab",
+    "orthography", "literary_register",
 })
 ALLOWED_REGISTERS = frozenset({"everyday", "literary", "mixed", "unspecified"})
 ALLOWED_REVIEW_STATUSES = frozenset({"draft", "reviewed"})
