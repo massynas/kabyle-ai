@@ -93,3 +93,21 @@ disagreements; resolve them through a second native-speaker review.
 5. Report per-category and per-register results, failure examples and
    confidence intervals where sample size permits.
 6. Select a base model only after native-speaker results and tokenizer tests.
+
+## Reproducible local model run
+
+After a benchmark file has been reviewed and frozen, run one model at a time:
+
+    python -m pip install -e ".[train,dev]"
+    python scripts/run_benchmark.py --input private/benchmark.jsonl --output private/predictions-qwen3.jsonl --model Qwen/Qwen3-1.7B --split dev
+
+Pin the model with --revision and record that SHA in experiment notes. The
+runner validates that every benchmark record is marked reviewed, selects only
+the requested dev or test split, uses deterministic greedy decoding, and saves
+predictions with model and generation metadata. It loads the model locally via
+Transformers and may use a GPU when available; no hosted compute is started.
+
+Keep the held-out test file and prediction outputs private. Do not commit
+benchmark data or predictions to Git. Run the same protocol and decoding
+settings for every candidate. The runner does not calculate an automatic
+linguistic score: native-speaker human scoring remains authoritative.
