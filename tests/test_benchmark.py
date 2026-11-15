@@ -72,6 +72,6 @@ def test_validate_file_reports_invalid_utf8(tmp_path):
 
 
 def test_kabyle_arabic_translation_categories_are_supported():
-    kabyle_to_arabic = valid_record(category="translation_kab_ar")
-    arabic_to_kabyle = valid_record(category="translation_ar_kab")
+    kabyle_to_arabic = valid_record(id="kab-dev-ar-0001", category="translation_kab_ar")
+    arabic_to_kabyle = valid_record(id="kab-dev-ar-0002", category="translation_ar_kab")
     assert validate_records([kabyle_to_arabic, arabic_to_kabyle]) == []
