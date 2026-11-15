@@ -21,3 +21,6 @@ Status: repository foundation only. No model has been trained or evaluated yet.
 Qwen2.5-1.5B-Instruct is a candidate only. License, tokenizer behaviour on Kabyle characters, language coverage and benchmark performance must be checked before selection.
 
 Speech and a full application are postponed. Retrieval may support terminology but cannot replace language adaptation. Public accessibility does not imply permission to train on books, articles or translations; see docs/data-policy.md.
+
+## Resource inventory
+The first-pass catalog of existing Kabyle datasets, corpora and their license/quality caveats is in [docs/resource-inventory.md](docs/resource-inventory.md). No external corpus is copied into this repository at this stage.
