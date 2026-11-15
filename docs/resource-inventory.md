@@ -12,6 +12,19 @@
 | [KabBench](https://huggingface.co/datasets/agbalu/KabBench) | 2,009 Kabyle MT reference sentences and 1,500 language-identification examples across six Amazigh varieties | CC-BY-SA-4.0 | Evaluation only: translation scoring, spelling and distinguishing Kabyle from related languages | **Keep out of training**; preserve as a held-out benchmark |
 | [Kabyle-French (Tatoeba export)](https://huggingface.co/datasets/Sifal/Kabyle-French) | 115,269 French↔Kabyle sentence pairs | Hugging Face card says only “CC”; upstream Tatoeba uses sentence-level licensing | Potentially the most directly relevant parallel text for French↔Kabyle | **Quarantine pending license audit and quality sampling**; export is unverified and may contain errors |
 
+## Audio and aligned speech-text resources
+
+| Resource | Contents / scale reported by publisher | License shown | Intended use | Decision |
+|---|---|---|---|---|
+| [TutlaytAI/Kabyle_ASR-Fr_Translation](https://huggingface.co/datasets/TutlaytAI/Kabyle_ASR-Fr_Translation) | 22,337 rows with audio, Kabyle sentence and French translation | No clear license declaration visible on the dataset card | Aligned Kabyle/French text and future ASR/translation experiments | **Quarantine** until publisher confirms rights and upstream provenance |
+| [TutlaytAI/Kabyle_ASR-En_Translation](https://huggingface.co/datasets/TutlaytAI/Kabyle_ASR-En_Translation) | 29,144 rows with audio, Kabyle sentence and English translation | No clear license declaration visible on the dataset card | Aligned Kabyle/English text and future ASR/translation experiments | **Quarantine** until publisher confirms rights and upstream provenance |
+| [TutlaytAI/kabyle_asr](https://huggingface.co/datasets/TutlaytAI/kabyle_asr) | About 32.8k rows in the visible train split, with audio, Kabyle text and a row-level `Licence` field | Mixed CC BY 4.0 and CC BY-NC 4.0 | ASR and possible text-only use of individually cleared rows | **Row-level filtering required**; exclude NC and unknown rows, pin revision and verify audio/source rights |
+| [Common Voice Kabyle 27.0](https://mozilladatacollective.com/datasets/cmu5xcvp800eao107zfex7alc) | 747,922 clips; 571.72 validated hours reported | CC0-1.0, with no-rehosting/re-sharing and no speaker-identification restrictions | Later ASR and speech work | **Speech milestone**; never re-host/re-share audio |
+
+The two translated datasets are especially promising linguistically, but their visible cards do not provide a clear license declaration. Their 22k/29k examples must not be imported until the publisher confirms rights and provenance. The raw ASR dataset exposes mixed row-level licenses: a dataset-level `cc` label is not sufficient to clear every row. The initial commercial-use filter accepts only explicit CC BY 4.0 rows and excludes CC BY-NC 4.0.
+
+Implementation notes and the conservative ingestion tooling are in [docs/audio-corpus-plan.md](audio-corpus-plan.md). No audio bytes or external corpus rows have been copied into this repository.
+
 ## Useful but not first-wave conversational training
 
 | Resource | Contents / scale reported by publisher | License shown | Intended use | Decision |
@@ -56,7 +69,7 @@ Before downloading any source into the training pipeline:
 3. **Inspect AƔBALU corpus manifests and source registry** to find further reusable raw text and avoid duplicating its work.
 4. **Review KabLiterary** as a separate literary-domain corpus.
 5. Keep KabBench/FLORES+ frozen for evaluation.
-6. Defer Common Voice audio until a speech milestone.
+6. Audit TutlaytAI audio datasets: request license/provenance clarification for translated corpora; count and filter row-level licenses in kabyle_asr.\n7. Defer Common Voice audio until a speech milestone.
 
 ## Source notes
 
