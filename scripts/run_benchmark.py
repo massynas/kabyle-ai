@@ -70,18 +70,16 @@ def main() -> int:
 
     with args.output.open("w", encoding="utf-8") as output:
         for record in selected:
-            encoded = tokenizer.apply_chat_template(
+            input_ids = tokenizer.apply_chat_template(
                 build_messages(record),
                 tokenize=True,
                 add_generation_prompt=True,
                 return_tensors="pt",
-                return_dict=True,
-            )
-            encoded = encoded.to(model.device)
-            input_length = encoded["input_ids"].shape[-1]
+            ).to(model.device)
+            input_length = input_ids.shape[-1]
             with torch.inference_mode():
                 generated = model.generate(
-                    **encoded,
+                    input_ids=input_ids,
                     max_new_tokens=args.max_new_tokens,
                     do_sample=False,
                     num_beams=1,
