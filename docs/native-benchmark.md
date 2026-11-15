@@ -26,7 +26,8 @@ Build an initial 100–300 items across these areas:
   it with everyday conversational style.
 
 For each item, record the register (everyday, literary, mixed, unspecified),
-category, expected answer, and review status. Preserve original wording exactly.
+category, expected answer, review status and dialect/variety when known. Preserve
+original wording exactly.
 Do not silently normalize ɣ ɛ č ḍ ṛ ṣ ṭ or Tifinagh.
 
 ## Splits and leakage prevention
@@ -112,3 +113,8 @@ Keep the held-out test file and prediction outputs private. Do not commit
 benchmark data or predictions to Git. Run the same protocol and decoding
 settings for every candidate. The runner does not calculate an automatic
 linguistic score: native-speaker human scoring remains authoritative.
+
+A blank [blind scoring sheet template](../benchmarks/native/score-sheet.template.csv)
+is provided for human evaluation. Keep model identities blinded during scoring
+where practical, and leave translation_meaning_0_4 empty for non-translation
+items. Record disagreements in notes and resolve them through adjudication.
