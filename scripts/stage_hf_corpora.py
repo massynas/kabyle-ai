@@ -124,7 +124,7 @@ def main() -> None:
                 "training_approved": False,
             }
             (config_destination / "manifest.json").write_text(
-                json.dumps(manifest, ensure_ascii=False, indent=2) + "\\n",
+                json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
                 encoding="utf-8",
             )
             print(f"staged {dataset_id}[{config_name or 'default'}]@{revision} -> {config_destination}")
