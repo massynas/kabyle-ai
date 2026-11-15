@@ -1,0 +1,38 @@
+name: tokenizer-probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: "Optional immutable model revision SHA (applies to both candidates)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install tokenizer-only dependencies
+        run: python -m pip install -e ".[tokenizer]"
+      - name: Probe candidate tokenizers
+        env:
+          MODEL_REVISION: ${{ inputs.revision }}
+        run: |
+          if [ -n "$MODEL_REVISION" ]; then
+            python scripts/probe_tokenizer.py --revision "$MODEL_REVISION" --output artifacts/tokenizer-probe.json
+          else
+            python scripts/probe_tokenizer.py --output artifacts/tokenizer-probe.json
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kabyle-ai-tokenizer-probe
+          path: artifacts/tokenizer-probe.json
+          retention-days: 7
