@@ -62,3 +62,12 @@ The run manifest records whether every training row also permits commercial use
 and distribution of model weights. A private training run can be allowed while
 open-source weight release remains blocked; do not publish an adapter unless the
 rights review explicitly clears that separate use.
+
+For a supported Linux CUDA environment with bitsandbytes installed, add
+--load-in-4bit to use NF4 QLoRA and reduce GPU memory requirements:
+
+    python scripts/train_lora.py --input private/train-approved.jsonl --model Qwen/Qwen3-1.7B --revision IMMUTABLE_40_CHAR_SHA --output-dir outputs/qwen3-kabyle-qlora --load-in-4bit --confirm-training
+
+The 4-bit mode requires CUDA and fails closed on CPU. Check GPU compatibility
+and available VRAM before starting; this repository does not rent or provision
+a GPU automatically.
