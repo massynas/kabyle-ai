@@ -84,7 +84,10 @@ def main() -> int:
             "gate_proj", "up_proj", "down_proj",
         ],
     )
+    model.config.use_cache = False
     model = get_peft_model(model, lora_config)
+    if hasattr(model, "enable_input_require_grads"):
+        model.enable_input_require_grads()
     model.print_trainable_parameters()
 
     dataset = Dataset.from_list(records)
@@ -145,6 +148,9 @@ def main() -> int:
             for dataset_id, revision, license_id in sources
         ],
         "rights_reviewed": True,
+        "rights_evidence_refs": sorted({
+            row["rights_review"]["evidence_ref"] for row in records
+        }),
         "output_is_adapter": True,
         "hyperparameters": {
             "epochs": args.epochs,
