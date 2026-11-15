@@ -94,6 +94,6 @@ def validate_file(
     """Validate a JSONL file, returning schema or I/O errors."""
     try:
         records = load_jsonl(path)
-    except (OSError, BenchmarkValidationError) as exc:
+    except (OSError, UnicodeError, BenchmarkValidationError) as exc:
         return [str(exc)]
     return validate_records(records, require_reviewed=require_reviewed)
