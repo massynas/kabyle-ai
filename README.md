@@ -24,3 +24,8 @@ Speech and a full application are postponed. Retrieval may support terminology b
 
 ## Resource inventory
 The first-pass catalog of existing Kabyle datasets, corpora and their license/quality caveats is in [docs/resource-inventory.md](docs/resource-inventory.md). No external corpus is copied into this repository at this stage.
+
+
+## Corpus collection
+
+See [docs/corpus-staging-policy.md](docs/corpus-staging-policy.md) for the private staging workflow. The downloader pins Hugging Face revisions and stores datasets outside Git; downloading does not mark a source as approved for training.
