@@ -41,6 +41,7 @@ sources:
       audio: audio
       license: Licence
     reported_rows: 32800
+    reported_total_rows: 46877
     rights_status: row_level_review_required
     allowed_for_training: false
     candidate_license_allowlist: ["CC BY 4.0"]
